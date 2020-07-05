@@ -5,3 +5,7 @@ go复制数组用copy内置方法：`copy(dst, src)`
 2. 先上下翻转，再沿着对角线反转，这样不需要额外空间。
 
 ```1. matrix[i][j] = matrix[len-1-i]; 2. matrix[i][j] = matrix[j][i] for j < i```
+
+## go 排序
+
+sort包的Sort方法或者Slice方法，其中Slice方法要提供一个返回bool值得less函数
