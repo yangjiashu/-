@@ -80,3 +80,7 @@ for i := l.Front(); i != nil; i = i.Next() {
 ```
 
 interface{}要进行类型转换，使用方法`element.(type)`方式进行类型转换，为了防止panic异常，可以采用`data, ok = element.(type)`的形式。
+
+### 文件操作
+
+主要的结构：`os.File`

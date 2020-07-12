@@ -150,3 +150,84 @@ const moduleA = {
 getter也可以访问根节点的状态：`xxx(state, getters, rootSate`。
 
 默认情况下，模块内部的action、mutation和getter是注册到全局命名空间中的，使得多个模块能够对同一mutation或action作出响应。
+
+## vue-router
+
+基本策略：当你要把Vue Router添加到应用中，需要做的是：将组件**映射**到路由（router），然后告诉Vue Router在哪里渲染它们。
+
+```html
+// 使用router-link组建来导航，通过传入'to'属性指定连接，<router-link>组件会默认渲染成<a>标签。
+<router-link to="/foo">Go to Foo</router-link>
+<router-link to="/bar">Go to Bar</router-link>
+```
+
+```html
+// 路由出口u，路由匹配到的组件将渲染在这里
+<router-view></router-view>
+```
+
+### 使用方法
+
+```javascript
+// 0. 使用模块化机制变成，导入Vue和VueRouter，并且调用Vue.use(VueRouter)注册中间件。
+// 1. 定义路由组件，可以通过import导入
+const Foo = {template: '<div>foo</div>'}
+const Bar = {template: '<div>bar</div>'}
+
+// 2. 定义路由，每个路由应该映射一个组件
+const routes = {
+    {path: '/foo', component: Foo},
+    {path: '/bar', component: Bar}
+}
+
+// 3. 创建router实例，然后传入'routes'配置
+const router = new VueRouter({
+    routes
+})
+
+// 4. 创建和挂载根实例
+const app = new Vue({
+    router
+}).$mount('#app')
+```
+
+通过注入路由器，我们可以在任何组建内通过`this.$router`访问路由器，也可以通过`this.$router`访问路由。
+
+### 动态路径参数
+
+```javascript
+const router = new VueRouter({
+    routes:[
+        // 动态路径参数 以冒号开头
+        {path: '/user/:id', component: User}
+    ]
+    // 现在/user/foo和/user/bar都映射到同一个路由
+})
+```
+
+路径参数用冒号标记，匹配到一个路由时，参数会被设置到`this.$router.params`，可以在每个组件内使用。
+
+因为路由参数变化时只是会复用组件而不是重新渲染组件，所以钩子函数不会调用。所以如果想对其进行响应的话可以使用`watch`对`$router`进行检测。
+
+```javascript
+const User = {
+    template: '...',
+    watch: {
+        $route(to, from) {
+            // 对路由变化做出响应
+        }
+    }
+}
+```
+
+### 嵌套路由
+
+使用VueRouter对象中路由配置的children属性。
+
+### 编程式的导航
+
+除了使用<router-link>进行导航外，还可以使用`this.$router.push`方法。
+
+如果想要导航到不同的url，使用router.push方法。该方法会在history中添加新纪录，所以使用浏览器的回退建可以返回到之前的url。
+
+当点击<router-link>时就相当于在内部调用了router.push
