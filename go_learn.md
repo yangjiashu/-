@@ -84,3 +84,89 @@ interface{}要进行类型转换，使用方法`element.(type)`方式进行类�
 ### 文件操作
 
 主要的结构：`os.File`
+
+可用的包：`ioutil`
+
+```golang
+err := ioutil.WriteFile("文件名", data, 0644)
+readContent, _ := ioutil.ReadFile("文件名")
+
+file, _ := os.Create("文件名")
+numOfBytes, _ := file.Write(srcByteArr)
+
+file, _ := os.Open("文件名")
+numOfBytes, _ := file.Read(dstByteArr)
+```
+
+### 链接数据库
+
+```golang
+var Db *sql.DB
+Db, err := sql.Open("数据库种类（postgres）", "参数")
+```
+
+连接过后可以调用`Db.Query()`来获取查询结果。
+
+limit关键词限制查询的条数，offset关键词表示跳过n条记录。
+
+### CRUD实例
+
+```golang
+func init() { // 初始化数据库
+	var err error
+	Db, err = sql.Open("postgres", "user=gwp dbname=gwp password=646233 sslmode=disable")
+	if err != nil {
+		panic(err)
+	}
+}
+
+// 获取多行记录
+func Posts(limit int) (posts []Post, err error) { // 查询前n条记录
+	rows, err := Db.Query("select id, content, author from posts limit $1", limit)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		post := Post{}
+		err = rows.Scan(&post.Id, &post.Content, &post.Author)
+		if err != nil {
+			return
+		}
+		posts = append(posts, post)
+	}
+	rows.Close()
+	return
+}
+
+// 获取单行记录
+func GetPost(id int) (post Post, err error) {
+	post = Post{}
+	err = Db.QueryRow("select id, content, author from posts where id = "+
+		"$1", id).Scan(&post.Id, &post.Content, &post.Author)
+	return
+}
+
+// 新建一条记录
+func (post *Post) Create() (err error) {
+	statement := "insert into posts (content, author) values ($1, $2) returning id"
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(post.Content, post.Author).Scan(&post.Id)
+	return
+}
+
+// 更新一条记录
+func (post *Post) Update() (err error) {
+	_, err = Db.Exec("update posts set content = $s2, author = $3 where id = $1", post.Id, post.Content, post.Author)
+	return
+}
+
+// 删除一条记录
+func (post *Post) Delete() (err error) {
+	_, err = Db.Exec("delete from posts where id = $1", post.Id)
+	return
+}
+```
