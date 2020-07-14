@@ -231,3 +231,4 @@ const User = {
 如果想要导航到不同的url，使用router.push方法。该方法会在history中添加新纪录，所以使用浏览器的回退建可以返回到之前的url。
 
 当点击<router-link>时就相当于在内部调用了router.push
+

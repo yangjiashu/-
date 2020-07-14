@@ -56,3 +56,11 @@
 3. git remote add origin [url]
 4. git fetch
 5. git checkout
+
+## git教程
+
+### 版本回退
+
+查看版本：
+
+`git log`
