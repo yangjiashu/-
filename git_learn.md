@@ -73,3 +73,4 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 
 用`git branch`查看当前分支。
 
+用`git checkout [分支名]`来切换分支。
