@@ -58,4 +58,18 @@ git add就是把文件**修改**添加到暂存区；
 
 第一步：创建ssh key，在用户home目录下，查看.ssh目录，如果有，那么查看有无`id_rsa`和`id_rsa.pub`文件，如果没有，则创建：`ssh-keygen -t rsa -C "1098325805@qq.com"`
 
-## 
+# 分支管理
+
+## 创建和合并分支
+
+HEAD严格来说不是指向提交，而是指向master，master才是指向提交的。
+
+创建了一个新的分支dev，实际上就是创建了一个新的指针。
+
+命令：
+
+首先，创建一个dev分支，然后切换到dev分支
+`git checkout -b dev`
+
+用`git branch`查看当前分支。
+
