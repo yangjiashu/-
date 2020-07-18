@@ -87,11 +87,10 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 
 创建：`git switch -c dev`
 
-<<<<<<< HEAD
-切换：`git switch master` ,
-=======
 切换：`git switch master`
 
 ## 解决冲突
 
->>>>>>> feature1
+在两个分支不是一前一后时，如果合并分支会产生冲突，必须手动解决冲突之后再提交。git status也可以告诉我们冲突的文件。再合并分支可以看到合并的情况，合并时情况可以用命令：
+
+`git log --graph --pretty=oneline --abbrev-commit`
