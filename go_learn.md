@@ -1,3 +1,37 @@
+## go 模块
+
+[](https://segmentfault.com/a/1190000020522261)
+
+配置：`go env -w GOPROXY=https://goproxy.cn,direct` and `go env -w GO111MODULE=auto/on`
+
+`go.mod`描述了当前项目的元信息。
+
+`go.sum`罗列了当前项目直接或间接以来的所有模块版本。
+
+`GO111MODULE`控制Go modules的开关，默认是auto。
+
+* auto:只有在有go.mod文件的时候启用Go modules。
+* on:无脑启用Go modules。
+* off:禁用Go modules。
+
+`GOPROXY`设置模块的代理，中国设置为`https://goproxy.cn,direct`
+
+迁移至Go Modules
+
+设置好GO module和GOPROXY，然后执行`go mod init <optional module path>`
+
+`go help module-get`和`go help gopath-get`分别了解两种get不同的行为。
+
+`go get -u`更新现有的依赖
+
+`go mod download`下载依赖到本地cache，缓存在`$GOPATH/pkg/mod`和`$GOPATH/pkg/sum`下
+
+`go mod tidy`整理现有的依赖
+
+`go mod graph`查看现有的依赖结构
+
+`go mod init`生成go.mod文件
+
 ## go 垃圾收集
 
 标记清除：
