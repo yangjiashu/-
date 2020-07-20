@@ -69,11 +69,11 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 命令：
 
 首先，创建一个dev分支，然后切换到dev分支
-`git checkout -b dev`
+`git checkout -b dev` or `git switch -c dev`
 
 用`git branch`查看当前分支。
 
-用`git checkout [分支名]`来切换分支。
+用`git checkout [分支名]`来切换分支。or `git switch [分支名]`
 
 用`git merge [分支名]`来合并分支，在master分支下执行，分支名为dev，这样master就跟进到了dev的版本去了。
 
@@ -81,7 +81,7 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 
 `git branch -d dev`
 
-**一个最佳实践是**，写代码是先用`git checkout -b xxx`创建一个分支，在完成工作之后再用`git checkout master`命令切换到主分支，最后用命令`git merge dev`合并分支，最后用`git branch -d dev`删除临时工作的分支。
+**一个最佳实践是**，写代码时先用`git checkout -b xxx`创建一个分支，在完成工作之后再用`git checkout master`命令切换到主分支，最后用命令`git merge dev`合并分支，最后用`git branch -d dev`删除临时工作的分支。
 
 另外，切换分支的命令推荐用新的switch
 
