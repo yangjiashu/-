@@ -93,6 +93,10 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 
 在两个分支不是一前一后时，如果合并分支会产生冲突，必须手动解决冲突之后再提交。git status也可以告诉我们冲突的文件。再合并分支可以看到合并的情况，合并时情况可以用命令：
 
+相当于已经合并成一个文件，但是需要先自行修改里面的冲突之后在commit，亦或者放弃本次merge，可以使用命令`git merge -abort`
+
+出现冲突之后文件里会出现提示。注意，出现冲突，git只会有提醒，然后把修改放在工作区，至于之后要怎么处理，由用户自行制定。
+
 `git log --graph --pretty=oneline --abbrev-commit`
 
 合并分支时 加上--no-ff参数可以采用普通模式合并，合并后的历史分支可以看出来。
@@ -101,4 +105,42 @@ HEAD严格来说不是指向提交，而是指向master，master才是指向提�
 
 `git remote`和`git remote -v`可以查看远程仓库信息。
 
-抓取分支：
+抓取分支： `git pull`
+
+## Fast Forward模式
+
+相当于直接移动master分支到新的分支
+
+禁用Fast Forward模式时，merge的时候相当于提交了一次新的master版本，会留下提交的痕迹
+同时在merge时也推荐添加-m的提交参数。
+
+`git merge --no-ff -m "merge with no-ff" dev`
+
+## 远程协作
+
+推送分支时，就是把该分支上的所有本地提交推送到远程仓库中去。推送时要**指定本地分支**，这样，Git就会将该分支推送到远程仓库的**对应分支**上去。
+
+`git push origin [要推送的分支]`
+
+并不一定要把本地分支都推送到远程去，master和dev分支要随时同步，而bug和feature不需要。
+
+抓取分支时，如果要在dev分支上开发，就需要创建远程origin的dev分支到本地，命令是：
+
+`git checkout -b dev origin/dev` or `git switch -c dev origin/dev`
+
+这时候可以在本地开发，然后不断的推送到dev上面去。但是，如果和其他的开发者出现冲突时，应该先拉取最新的dev：
+
+`git pull`，但是这时候pull会失败，是因为还没有和远程的dev建立链接，要么建立链接，要么输入命令`git pull origin dev`。
+
+建立链接的命令是：`git branch --set-upstream-to=origin/dev dev`，这时候在dev分支下输入`git pull`命令即可快速拉取分支。这时候手动处理冲突便可以推送了。
+
+## 远程协作总结
+
+多人协作的工作模式通常是这样：
+
+1. 首先，可以试图用git push origin <branch-name>推送自己的修改；
+2. 如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+3. 如果合并有冲突，则解决冲突，并在本地提交；
+4. 没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！
+
+如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>。

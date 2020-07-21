@@ -1,3 +1,23 @@
+## 安装
+
+npm换源：
+
+```
+先输入 npm config list 查看npm的配置
+再输入 npm config set registry https://registry.npm.taobao.org
+```
+
+这样就把npm的源换成了国内的镜像
+
+### npm查看安装包
+
+`npm list -g --depth 0`
+
+### 安装vue/cli
+
+`npm install -g @vue/cli`
+
+
 ### 动画
 
 vue动画分为两种
