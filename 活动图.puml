@@ -1,0 +1,33 @@
+@startuml first
+
+start 
+
+if (多线程？) then (yes) 
+  fork
+    :处理1;
+  fork again
+    :处理2;
+  fork again
+    :处理3;
+  end fork
+else (no)
+partition go {
+    :go1;
+    :go2;
+    note right
+        this note is on several
+        //lines// and can
+        contain <b>HTML</b>
+        +++
+        * Calling the method ""foo()"" is prohibited
+    end note
+}
+partition color {
+    #HotPink:readjkflajldjf
+    jaklfjdljf!;
+    #AAA:ending;
+}
+endif
+
+stop
+@enduml
