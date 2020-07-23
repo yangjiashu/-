@@ -1,0 +1,70 @@
+@startuml learning plantUML
+
+start
+
+:第一个活动标签;
+:第二个活动**标签**;
+
+(A)
+
+detach
+
+(A)
+
+if (条件1) then(yes)
+    :条件1成立了;
+    :执行接下来的n条活动标签;
+else (no)
+    :条件一不成立;
+    :执行接下来的n条活动标签;
+endif
+
+(B)
+
+detach
+
+(B)
+
+repeat
+
+:读取数据;
+:将数据放到socket中;
+backward:这是返回标签;
+
+repeat while (管道里还有数据)
+
+(C)
+
+detach
+
+(C)
+
+while (检查文件) is (not empty)
+    :读文件;
+backward:继续检查;
+endwhile (empty)
+fork
+:关文件;
+fork again
+:上传文件;
+fork again
+:反馈给用户;
+end fork
+
+(D)
+detach
+(D)
+
+:foo1;
+floating note left: This is a note
+:foo2;
+note right
+  This note is on several
+  //lines// and can
+  contain <b>HTML</b>
+  ====
+  * Calling the method ""foo()"" is prohibited
+end note
+
+(E)
+@enduml
