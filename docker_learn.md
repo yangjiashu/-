@@ -58,6 +58,10 @@ docker rm `docker ps -a -q`
 
 `sudo docker attach <container_name>`
 
-## 创建守护式容器
+## 开启MySQL容器
 
-`sudo docker run --name xxx -d ubuntu /bin/sh -c "while true; do echo hello world; sleep1; done"`使用了-d参数，所以容器将在后台运行
+`docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql`
+
+-p 3306:3306表示容器服务的3306端口映射到宿主主机的3306端口，后面长的那句表示设置mysql服务root用户的密码
+
+本机可以通过命令`mysql -h localhost -u root -p`启动mysql客户端
