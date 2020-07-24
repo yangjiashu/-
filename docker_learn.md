@@ -60,8 +60,10 @@ docker rm `docker ps -a -q`
 
 ## 开启MySQL容器
 
-`docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql`
+`docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql`
 
 -p 3306:3306表示容器服务的3306端口映射到宿主主机的3306端口，后面长的那句表示设置mysql服务root用户的密码
 
-本机可以通过命令`mysql -h localhost -u root -p`启动mysql客户端
+然后运行`docker exec -it mysql-test bash`就可以进入容器的bash了
+
+这时可以通过命令`mysql -h localhost -u root -p`启动mysql客户端
