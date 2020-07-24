@@ -62,3 +62,45 @@ grant all privileges on database exampledb to dbuser;
 \conninfo: 列出所有连接信息。
 \q: 退出。
 ```
+
+### Mysql
+
+### window
+
+在根目录下创建my.ini文件夹，输入
+
+```
+[client]
+# 设置mysql客户端默认字符集
+default-character-set=utf8
+ 
+[mysqld]
+# 设置3306端口
+port = 3306
+# 设置mysql的安装目录
+basedir=C:\\web\\mysql-8.0.11
+# 设置 mysql数据库的数据的存放目录，MySQL 8+ 不需要以下配置，系统自己生成即可，否则有可能报错
+# datadir=C:\\web\\sqldata
+# 允许最大连接数
+max_connections=20
+# 服务端使用的字符集默认为8比特编码的latin1字符集
+character-set-server=utf8
+# 创建新表时将使用的默认存储引擎
+default-storage-engine=INNODB
+```
+
+初始化`mysqld --initialize --console`
+
+复制初始密码
+
+执行`mysqld install`
+
+执行`net start mysql`
+
+登陆`mysql -u root -p`
+
+输入密码
+
+更改密码
+
+`ALTER user 'root'@'localhost' IDENTIFIED BY '你的密码';`
