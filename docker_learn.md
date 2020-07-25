@@ -66,4 +66,4 @@ docker rm `docker ps -a -q`
 
 然后运行`docker exec -it mysql-test bash`就可以进入容器的bash了
 
-这时可以通过命令`mysql -h localhost -u root -p`启动mysql客户端
+这d 以通过命令`mysql -h localhost -u root -p`启动mysql客户端
