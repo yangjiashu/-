@@ -211,7 +211,7 @@ const app = new Vue({
 }).$mount('#app')
 ```
 
-通过注入路由器，我们可以在任何组建内通过`this.$router`访问路由器，也可以通过`this.$router`访问路由。
+通过注入路由器，我们可以在任何组建内通过`this.$router`访问路由器，也可以通过`this.$route`访问路由。
 
 ### 动态路径参数
 
@@ -242,7 +242,6 @@ const User = {
 
 ### 嵌套路由
 
-来了，耶耶耶
 使用VueRouter对象中路由配置的children属性。
 
 ### 编程式的导航
