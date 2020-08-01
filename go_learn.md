@@ -251,6 +251,9 @@ func (post *Post) Delete() (err error) {
 	return
 }
 ```
+# 错误处理
+
+`errors.New()`新建一条错误
 
 # 顺序编程
 
