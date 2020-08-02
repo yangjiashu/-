@@ -67,3 +67,57 @@ docker rm `docker ps -a -q`
 然后运行`docker exec -it mysql-test bash`就可以进入容器的bash了
 
 这d 以通过命令`mysql -h localhost -u root -p`启动mysql客户端
+
+## 查看容器内的进程
+
+`docker top <id/name>`
+
+## 在容器内部运行进程
+
+`docker exec -it <id/name> <程序名>`
+
+## 查看容器
+
+`docker ps`, `docker ps -a`, `docker ps -l`, `docker ps -n <数字>`显示最后n个，无论运行或没运行
+
+`docker inspect <id/name>` 很多内容，非常详细
+
+## 自动重启
+
+`docker run --restart=always --name <name> -d <imgname>` 
+
+--restart还可以设置为on-failure，这样，只有当退出代码非0时才重启，还可以设置重启次数
+
+`--restart=on-failure:5`
+
+## 构建镜像
+
+* 使用 `docker commit`  命令
+* 使用 `docker build` 命令和`Dockerfile`文件（推荐）
+
+`docker commit -m "注释" --author="myname" <name/id> xxx/xxx:latest`
+
+```
+// build 模式
+mkdir static_web
+touch Dockerfile
+vim Dockerfile
+
+# Version: 0.0.1
+FROM ubuntu:14.0.0
+MAINTAINER Jiashu Yang xxx@skld.com
+RUN apt-get update
+RUN apt-get install -y nginx
+RUN echo 'Hi, I am in your container' > /usr/share/nginx/html/index.html
+EXPOSE 80
+```
+
+`docker build -t ubuntu/python:latest .`
+
+## 登陆docker
+
+`docker login`
+
+## 在容器中装东西
+
+`apt-get -yqq update`   `apt-get -y install apache2`
