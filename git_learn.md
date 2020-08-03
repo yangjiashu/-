@@ -58,6 +58,8 @@ git add就是把文件**修改**添加到暂存区；
 
 第一步：创建ssh key，在用户home目录下，查看.ssh目录，如果有，那么查看有无`id_rsa`和`id_rsa.pub`文件，如果没有，则创建：`ssh-keygen -t rsa -C "1098325805@qq.com"`
 
+第二步：在github账号管理里添加ssh公钥
+
 # 分支管理
 
 ## 创建和合并分支

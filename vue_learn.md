@@ -17,6 +17,9 @@ npm换源：
 
 `npm install -g @vue/cli`
 
+### 项目安装时
+
+npm rebuild node-sass，如果模块不完整的话运行这个命令
 
 ### 动画
 
