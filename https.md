@@ -68,5 +68,18 @@ HTTPS采用混合加密的形式
 11. HTTP通信
 12. 断开连接
 
-# HTTP代理
+## SameSite属性
 
+Cookie往往用来存储用户的身份信息，恶意网站可以设法伪造带有正确Cookie的HTTP请求，这就是CSRF攻击。
+
+总的来说就是窃取用户的Cookie
+
+Cookie的SameSite属性用来限制第三方Cookie，从而减少安全风险
+
+可以设置三个值
+
+* Strict
+* Lax
+* None
+
+Strict最为严格，完全禁止第三方Cookie，跨站点时，任何情况下都不会发送Cookie。

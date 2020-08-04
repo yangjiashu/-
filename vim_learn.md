@@ -25,3 +25,10 @@ vim快捷键：
 ## 分屏
 
 :sp file 或者 :vs file
+
+## 切换tab
+
+`:tabc`：关闭当前tab
+`:tabo`：关闭所有其他的tab
+`gt, gT`：可以直接切换
+`alt+n`：可以快速切换
