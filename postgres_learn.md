@@ -104,3 +104,76 @@ default-storage-engine=INNODB
 更改密码
 
 `ALTER user 'root'@'localhost' IDENTIFIED BY '你的密码';`
+
+# SQL学习
+
+## 联合主键
+
+允许有一列重复，只要不是联合逐渐全部重复就行
+
+## 主键
+
+不要选择业务相关的主键
+
+类型最好是`BIGINT`或者`GUID`类型，同时也不能为空
+
+## 外键
+
+在表字段最后添加，格式：
+
+```
+constraint [约束名]
+    约束内容
+
+constraint students_classes_id_fk
+    foreign key (class_id) references classes (id)
+```
+
+## DDL
+
+`alter table`, `drop constraint`, `drop column` `add constraint`
+
+## DQL
+
+逻辑运算符: `not`, `and`, `or` 优先级从高到低
+
+`=`, `>`, `>=`, `<>`
+
+比较运算符也可以和字符串比较，字符串要用单引号''包裹起来
+
+模糊查询：`like`关键字，`%`表示0个或多个字符, `_`表示任意单个字符, `[]`表示匹配括号里的**一个**，不能是多个，也不能一个都没有, 且01234可以用0-4表示，abcde可以用a-e表示, `[^]`表示不在括号中的字符,表示出了括号内的**任意一个**字符
+
+`in (...)`表示在**集合**中查询，集合中是点。
+
+`between m and n`表示在**区间**中查询，表示一个闭区间。
+
+## 投影查询
+
+查询时不是所有列，而只包含指定列的查询叫投影查询
+
+## 排序
+
+`order by`子句可以对查询结果排序，`order by xxx desc`可以以倒序查询,且排序的列可以不止一个
+
+`order by`子句要放在`where`后面
+
+## 分页查询
+
+`limit <m> offset <n>`可以实现分页查询, 表示跳过n条记录查询最多m条记录(有m条就查m条，到末尾没有m条时就查询所有记录)
+
+如果offset太大，超过了表长时会返回空数据而不是报错
+
+offset越大效率越底
+
+简写模式`limit n, m`，顺序反过来了
+
+
+## 聚合查询
+
+要使用聚合函数，一般有`count(field)`, `avg()`, `max()`, `min()`, `sum()`, 可以给聚合函数查询结果取别名, `ceiling`，`floor`分别表示向上取整和向下取整
+
+一般和select, group by的having子句配合使用
+
+## 分组
+
+分组查询也一般是和聚合函数配合
