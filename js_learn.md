@@ -98,3 +98,8 @@ javascript的面向对象是基于构造函数和原形链的，构造函数有�
 
 ## Promise
 
+# filter和map
+
+![](images/map.png)
+
+![](images/filter.png)

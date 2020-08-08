@@ -177,3 +177,48 @@ offset越大效率越底
 ## 分组
 
 分组查询也一般是和聚合函数配合
+
+
+
+## 事务
+
+事务的ACID
+
+1. Atomic，原子性，要么全部执行，要么全部不执行
+2. Consistent，一致性，事务完成后，所有数据的状态都是一致的，符合逻辑的
+3. Isolation，隔离性，如果有多个事务并发执行，每个事务作出的修改必须和其他事务隔离
+4. Duration，持久性，对数据的修改会持久化到数据库中
+
+单条sql会默认当成一个事务处理，称之为隐式事务
+
+显示事务用`begin`开始, `commit`提交
+
+主动让事务失败，可以在最后调用`rollback`
+
+### 隔离级别
+
+![](images/sql1.png)
+
+**Read uncommitted**
+
+隔离级别最低的一种事务级别，会读取其他事务修改但未提交的记录，当其他事务回时，那么读到的数据就是脏数据(dirty read)
+
+设置语句`set transaction isolation level read uncommitted`
+
+![](images/sql2.png)
+
+**Read committed**(很多数据库默认)
+
+可能会出现不可重复读(Non repeatable read), 因为隔离级别是只能读已经提交的修改，但是在出现修改语句之前是可以读的，所以修改了之后又commit了，读的数据就和原来不一样了
+
+![](images/sql3.png)
+
+**Repeatable read**(mysql InnoDB默认)
+
+可能会出现幻读的问题(phantom read),在我们使用RR的时候,事务启动会创建一个read-view，之后其它的事务修改了数据，这边看到的仍然和开始时一样，所以在RR隔离级别下事务不受外界影响
+
+![幻读现象](images/sql4.png "幻读现象")
+
+**Serializable**
+
+最高级别的隔离，所有事务按照次序依次执行，安全性很高，但是效率比较低
