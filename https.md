@@ -83,3 +83,5 @@ Cookie的SameSite属性用来限制第三方Cookie，从而减少安全风险
 * None
 
 Strict最为严格，完全禁止第三方Cookie，跨站点时，任何情况下都不会发送Cookie。
+
+## TCP/IP
