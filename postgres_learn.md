@@ -133,6 +133,20 @@ constraint students_classes_id_fk
 
 `alter table`, `drop constraint`, `drop column` `add constraint`
 
+## DML
+
+插入语句`insert into <表名> (字段名，字段名...) values (值，值...)`
+
+一次性添加多个记录，可以在values后面接多个括号(),(),();
+
+更新语句`update <表名> set 字段1=值, 字段2=值 ... where` 
+
+更新字段时可以多个值，也可以用表达式
+
+删除语句`delete from <表名> where`
+
+replace语句，代替insert，如果存在该记录可以替换, 如果不存在，会插入新纪录
+
 ## DQL
 
 逻辑运算符: `not`, `and`, `or` 优先级从高到低
@@ -178,7 +192,28 @@ offset越大效率越底
 
 分组查询也一般是和聚合函数配合
 
+## 多表查询
 
+from 后面接多张表，这样的查询的源是几张表的乘积，这样的查询叫做笛卡尔查询，查询的源很大
+
+## 连接查询
+
+连接查询是另一种多表查询
+
+### 内连接
+
+连接的写法是：
+
+1. 先确定主表，用`select from <表名>`
+2. 再确定要连接的表，用`inner join <表明>`的语法
+3. 然后确定连接条件，用`on <条件>`
+4. 可选：加上where、order by子句
+
+### 外连接
+
+由内连接就有外连接，外连接又分为`left join`, `right join`, `full join`
+
+连接时，会用主表中on条件主表涉及的字段和连接表的字段逐个比较，如果是`inner join`的话，结果记录中只会保留两张表都有的记录，如果是`left join`，会保留所有的主表记录，连接表没有的记录会用null代替，如果是`right join`，会将所有连接表的记录保留，主表没有的用null代替，如果是`full join`，则两张表的记录都保留
 
 ## 事务
 

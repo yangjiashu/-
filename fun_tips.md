@@ -92,5 +92,16 @@ MurmurHash是一种非加密型哈希函数，与其它流行的哈希函数相�
 
 ![](./images/constent_hash_4.png)
 
-## 一致性hash实现
+## Context
 
+控制并发时，有两种方式，一种是WaitGroup，另一种就是context
+
+sync.WaitGroup：将一件事拆分成很多个job，最后要等到所有job执行完才可以执行主程序，这时就可以使用WaitGroup
+
+三个关键API：`wg.Add(n)`, `wg.Done()`, `wg.Wait()`
+
+那么如何通知子任务结束呢，例如当桌面应用点击关闭时，如何通知其他任务结束呢，可以采用`select+channel`
+
+问题：有很多嵌套的gorutine时就很难用channel实现，可以用context实现
+
+context工作方式：在主程序最上面宣告一个主`context.Background()`，然后在每个worker节点单独建立子上下文，这样做最主要的目的就是当关闭其中一个上下文的时候可以直接取消worker内所有的job。对比历程参见
