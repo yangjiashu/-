@@ -133,6 +133,20 @@ constraint students_classes_id_fk
 
 `alter table`, `drop constraint`, `drop column` `add constraint`
 
+## DML
+
+插入语句`insert into <表名> (字段名，字段名...) values (值，值...)`
+
+一次性添加多个记录，可以在values后面接多个括号(),(),();
+
+更新语句`update <表名> set 字段1=值, 字段2=值 ... where` 
+
+更新字段时可以多个值，也可以用表达式
+
+删除语句`delete from <表名> where`
+
+replace语句，代替insert，如果存在该记录可以替换, 如果不存在，会插入新纪录
+
 ## DQL
 
 逻辑运算符: `not`, `and`, `or` 优先级从高到低
@@ -201,16 +215,45 @@ from 后面接多张表，这样的查询的源是几张表的乘积，这样的
 
 连接时，会用主表中on条件主表涉及的字段和连接表的字段逐个比较，如果是`inner join`的话，结果记录中只会保留两张表都有的记录，如果是`left join`，会保留所有的主表记录，连接表没有的记录会用null代替，如果是`right join`，会将所有连接表的记录保留，主表没有的用null代替，如果是`full join`，则两张表的记录都保留
 
-## DML
+## 事务
 
-插入语句`insert into <表名> (字段名，字段名...) values (值，值...)`
+事务的ACID
 
-一次性添加多个记录，可以在values后面接多个括号(),(),();
+1. Atomic，原子性，要么全部执行，要么全部不执行
+2. Consistent，一致性，事务完成后，所有数据的状态都是一致的，符合逻辑的
+3. Isolation，隔离性，如果有多个事务并发执行，每个事务作出的修改必须和其他事务隔离
+4. Duration，持久性，对数据的修改会持久化到数据库中
 
-更新语句`update <表名> set 字段1=值, 字段2=值 ... where` 
+单条sql会默认当成一个事务处理，称之为隐式事务
 
-更新字段时可以多个值，也可以用表达式
+显示事务用`begin`开始, `commit`提交
 
-删除语句`delete from <表名> where`
+主动让事务失败，可以在最后调用`rollback`
 
-replace语句，代替insert，如果存在该记录可以替换, 如果不存在，会插入新纪录
+### 隔离级别
+
+![](images/sql1.png)
+
+**Read uncommitted**
+
+隔离级别最低的一种事务级别，会读取其他事务修改但未提交的记录，当其他事务回时，那么读到的数据就是脏数据(dirty read)
+
+设置语句`set transaction isolation level read uncommitted`
+
+![](images/sql2.png)
+
+**Read committed**(很多数据库默认)
+
+可能会出现不可重复读(Non repeatable read), 因为隔离级别是只能读已经提交的修改，但是在出现修改语句之前是可以读的，所以修改了之后又commit了，读的数据就和原来不一样了
+
+![](images/sql3.png)
+
+**Repeatable read**(mysql InnoDB默认)
+
+可能会出现幻读的问题(phantom read),在我们使用RR的时候,事务启动会创建一个read-view，之后其它的事务修改了数据，这边看到的仍然和开始时一样，所以在RR隔离级别下事务不受外界影响
+
+![幻读现象](images/sql4.png "幻读现象")
+
+**Serializable**
+
+最高级别的隔离，所有事务按照次序依次执行，安全性很高，但是效率比较低
